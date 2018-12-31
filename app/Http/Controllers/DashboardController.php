@@ -246,17 +246,18 @@ class DashboardController extends Controller
         if ($leave_from_date == $leave_to_date) {
             $leave_duration_day = request()->input('leave_type_day');
             $leave_slot_day = request()->input('leave_slot_day');
+            $leave_from_time =  request()->input('from_time');
+            $leave_to_time =  request()->input('to_time');
         }
 
-        echo request()->input('from_time');
-        echo request()->input('to_time');
-        die;
         $insert_array =  [  'leave_type_id' => $leave_type,
         'leave_from_date'=>$leave_from_date,
         'leave_to_date' => $leave_to_date,
         'user_id'=>$user_id,
         'leave_duration_day'=>isset($leave_duration_day) ? $leave_duration_day : 0,
-        'leave_slot_day'=> isset($leave_slot_day) ? $leave_slot_day :0
+        'leave_slot_day'=> isset($leave_slot_day) ? $leave_slot_day :0,
+        'leave_from_time'=>isset($leave_from_time) ? $leave_from_time : 0,
+        'leave_to_time'=> isset($leave_to_time) ? $leave_to_time :0
         ];
         Leave::insert('leaves', $insert_array);
         return redirect('leaves/show/'.Crypt::encrypt($user_id))->with('message', __('Leave Request Added'));
