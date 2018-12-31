@@ -34,6 +34,8 @@ class UpdateLeavesTable extends Migration
             $table->dropColumn('leave_to_date');
             $table->dropColumn(['leave_duration_day']);
             $table->dropColumn(['leave_slot_day']);
+            $table->dropColumn(['leave_from_time']);
+            $table->dropColumn(['leave_to_time']);
             $table->dropForeign(['leave_type_id']);
         });
     }
