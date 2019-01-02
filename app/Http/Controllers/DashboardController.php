@@ -367,7 +367,7 @@ class DashboardController extends Controller
     }
 
     /**
-     * @DateOfCreation      02-01-2019 
+     * @DateOfCreation      02 January 2019 
      * @ShortDescription    This function display form to add leave type
      *
      */
