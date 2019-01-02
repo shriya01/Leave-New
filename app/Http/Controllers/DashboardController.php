@@ -365,4 +365,52 @@ class DashboardController extends Controller
         $import_success = 'File Imported And Insert Record successfully.';
         return back()->with(['import_success'=>$import_success,'error_array'=>$array]);
     }
+
+    /**
+     * @DateOfCreation      02-01-2019 
+     * @ShortDescription    This function display form to add leave type
+     *
+     */
+    public function getLeaveType(){
+        return view("admin.addLeaveType");
+    }
+
+    /**
+     * @DateOfCreation         02 January 2019
+     * @ShortDescription       This function save the new leave type into the database
+     * @return                 View
+     */
+    public function postLeaveType(Request $request){
+
+
+        $validator = Validator::make($request->all(),
+            ['leave_type_name' => 'required|unique:leave_type'],
+            ['leave_type_name.required' => 'Leave Type Field Is Required',
+             'leave_type_name.unique' => 'Leave Type Name Already Exists In Database']
+        );
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator->errors());
+        }
+        $leave_type_name =  request()->leave_type_name;
+        $insert_array =  [ 'leave_type_name' => $leave_type_name ];
+        Leave::insert('leave_type', $insert_array);
+        return redirect('leaveTypes')->with('message', __('Leave Type Added'));
+    }
+
+    /**
+     * @DateOfCreation         02 January 2019
+     * @ShortDescription       This function displays the availble leave types
+     * @return                 View
+     */
+    public function leaveTypes()
+    {
+        /**
+         * @ShortDescription Blank array for the data for sending the array to the view.
+         *
+         * @var Array
+         */
+        $data = [];
+        $data['leaveTypes'] = Leave::select('leave_type',['leave_type_name']);
+        return view('admin.leaveTypes', $data);
+    }
 }

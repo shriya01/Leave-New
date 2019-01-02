@@ -45,6 +45,9 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post('admin/store', 'DashboardController@postLeave')->name('admin/store');
     Route::post('admin/checkvalidation', 'DashboardController@checkValidation')->name('admin/checkvalidation');
     Route::post('leaves/changestatus', 'DashboardController@changeLeaveStatus')->name('leaves/changestatus');
+    Route::get('/addLeaveType', ['as'=>'addLeaveType','uses'=>'DashboardController@getLeaveType']);
+    Route::post('/addLeaveType', ['as'=>'addLeaveType','uses'=>'DashboardController@postLeaveType']);
+    Route::get('/leaveTypes', ['as'=>'leaveTypes','uses'=>'DashboardController@leaveTypes']);
 });
 
 //export to excel
