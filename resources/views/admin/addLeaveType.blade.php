@@ -28,12 +28,14 @@
                 {{ session()->get('message') }}
             </div>
             @endif
-            <form role="form" method="post" id="adminleaveform" action="">
+            <form role="form" method="post" id="adminleaveform" action="{{route('leaveTypes')}}">
                 @csrf
+                 <input type="hidden" name="leave_type_id" value="{{ Crypt::encrypt($leave_type_id) }}">
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="leave_type_name" >Leave Type</label>
-                        <input type="text" name="leave_type_name" id="leave_type_name" class="form-control"  />
+                        <input type="text" name="leave_type_name" id="leave_type_name" @if(isset($leave_type_name)) value="{{$leave_type_name}}" @endif class="form-control"  />
+
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-md-3">

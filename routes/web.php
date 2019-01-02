@@ -34,6 +34,7 @@ Route::get('leaves/showleaves', 'HomeController@showUserLeaveRecords')->name('le
 Route::get('/admin', 'AdminController@getLogin');
 Route::post('/admin', 'AdminController@postLogin');
 Route::post('/deleteUser', 'DashboardController@deleteUser');
+Route::post('/deleteLeaveType', 'DashboardController@deleteLeaveType');
 Route::group(['middleware' => ['admin']], function () {
     Route::get('/dashboard', ['as'=>'dashboard','uses'=>'DashboardController@index']);
     Route::get('/users', ['as'=>'users','uses'=>'DashboardController@users']);
@@ -45,8 +46,8 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post('admin/store', 'DashboardController@postLeave')->name('admin/store');
     Route::post('admin/checkvalidation', 'DashboardController@checkValidation')->name('admin/checkvalidation');
     Route::post('leaves/changestatus', 'DashboardController@changeLeaveStatus')->name('leaves/changestatus');
-    Route::get('/addLeaveType', ['as'=>'addLeaveType','uses'=>'DashboardController@getLeaveType']);
-    Route::post('/addLeaveType', ['as'=>'addLeaveType','uses'=>'DashboardController@postLeaveType']);
+    Route::get('/addLeaveType/{id?}', ['as'=>'addLeaveType','uses'=>'DashboardController@getLeaveType']);
+    Route::post('/leaveTypes', ['as'=>'leaveTypes','uses'=>'DashboardController@postLeaveType']);
     Route::get('/leaveTypes', ['as'=>'leaveTypes','uses'=>'DashboardController@leaveTypes']);
 });
 

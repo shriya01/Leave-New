@@ -58,7 +58,7 @@ class Leave
      */
     public static function update($table_name = '', $update_array = [], $where_array = [])
     {
-        DB::table($table_name)->where($where_array)->update($update_array);
+        return DB::table($table_name)->where($where_array)->update($update_array);
     }
     /**
      * @DateOfCreation       27 August 2018
@@ -119,5 +119,10 @@ class Leave
             ->select('leave_id', 'leave_type_name', 'leaves.user_id', 'user_first_name', 'user_last_name', 'leave_from_date', 'leave_to_date', 'leaves.is_deleted as status', 'leave_duration_day', 'leave_slot_day')->where('leave_from_date', '>=', $min_from_date)->where('leave_from_date', '<=', $max_from_date)
             ->orderBy('leave_id', 'DESC')
             ->get();
+    }
+
+    public static function delete($table_name,$where_array)
+    {
+       return DB::table($table_name)->where($where_array)->delete();
     }
 }

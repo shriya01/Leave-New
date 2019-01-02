@@ -104,9 +104,9 @@
                     <td>{!! showStatus($row->user_status) !!}</td>
                     <td>
                         <div class="btn-group">
-                            <a class="btn btn-success" title="{{__('messages.edit')}}" href="{{ url('/') }}/addUser/{{ Crypt::encrypt($row->user_id) }}" data-toggle="tooltip">{{__('messages.edit')}}</a>
-                            <a class="btn btn-danger deleteDetail" title="{{__('messages.delete')}}" data-id="{{ Crypt::encrypt($row->user_id) }}" href="#" data-toggle="tooltip">{{__('messages.delete')}}</a>
-                            <a class="btn btn-info " title="{{__('messages.view_leave_records')}}" data-id="{{ Crypt::encrypt($row->user_id) }}" href="{{route('leaves/show',Crypt::encrypt($row->user_id))}}" data-toggle="tooltip">{{__('messages.view_leave_records')}}</a>
+                            <a class="btn btn-success" title="{{__('messages.edit')}}" href="{{ url('/') }}/addUser/{{ Crypt::encrypt($row->user_id) }}" data-toggle="tooltip"><i class='fa fa-edit'></i></a>
+                            <a class="btn btn-danger deleteDetail" title="{{__('messages.delete')}}" data-id="{{ Crypt::encrypt($row->user_id) }}" href="#" data-toggle="tooltip"><i class='fa fa-trash'></i></a>
+                            <a class="btn btn-info " title="{{__('messages.view_leave_records')}}" data-id="{{ Crypt::encrypt($row->user_id) }}" href="{{route('leaves/show',Crypt::encrypt($row->user_id))}}" data-toggle="tooltip"><i class='fa fa-eye'></i></a>
                         </div>
                     </td>
                 </tr>
@@ -119,4 +119,8 @@
 </section>
 </section>
 <!--main content end-->
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('public/backend/js/mycustom.js') }}" type="text/javascript"></script>
 @endsection
