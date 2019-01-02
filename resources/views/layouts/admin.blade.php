@@ -16,10 +16,11 @@
     <link href="{{ asset('public/backend/css/style.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
     <link href="{{ asset('public/backend/css/sweetalert.css') }}" rel="stylesheet">
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
     <style type="text/css">
         .btn-group .btn {
     margin-right: 10px;
-}
+    }
     </style>
     @yield('styles')
 </head>
@@ -55,6 +56,5 @@
         var base_url = "{{ url('/') }}";
         var csrf_token = "<?php echo csrf_token();?>";
     </script>
-    <script src="{{ asset('public/backend/js/mycustom.js') }}" type="text/javascript"></script>
 </body>
 </html>

@@ -371,8 +371,19 @@ class DashboardController extends Controller
      * @ShortDescription    This function display form to add leave type
      *
      */
-    public function getLeaveType(){
-        return view("admin.addLeaveType");
+    public function getLeaveType($id = null){
+        $data = [];
+        if(!empty($id))
+        {
+            $id = Crypt::decrypt($id);
+            $leave_types = Leave::select('leave_type', ['leave_type_id', 'leave_type_name'], ['leave_type_id'=>$id,'is_deleted'=>2]);
+            foreach ($leave_types as $key) 
+            {
+                $data['leave_type_id'] = $key->leave_type_id;
+               $data['leave_type_name'] =$key->leave_type_name;
+            }
+         }
+       return view("admin.addLeaveType",$data);
     }
 
     /**
@@ -381,20 +392,32 @@ class DashboardController extends Controller
      * @return                 View
      */
     public function postLeaveType(Request $request){
-
-
+        $rules = ['leave_type_name' => 'required|unique:leave_type'];
+        $id =  Crypt::decrypt(request()->leave_type_id);
+        if(!empty($id))
+        {   
+            $rules['leave_type_name'] = 'required|unique:leave_type,leave_type_name,'.$id.',leave_type_id';
+        }
         $validator = Validator::make($request->all(),
-            ['leave_type_name' => 'required|unique:leave_type'],
+            $rules,
             ['leave_type_name.required' => 'Leave Type Field Is Required',
              'leave_type_name.unique' => 'Leave Type Name Already Exists In Database']
         );
         if ($validator->fails()) {
             return redirect()->back()->withInput()->withErrors($validator->errors());
         }
+ 
         $leave_type_name =  request()->leave_type_name;
         $insert_array =  [ 'leave_type_name' => $leave_type_name ];
-        Leave::insert('leave_type', $insert_array);
-        return redirect('leaveTypes')->with('message', __('Leave Type Added'));
+        if(!empty($id)){
+            Leave::update('leave_type',$insert_array,['leave_type_id'=>$id]);
+            return redirect('leaveTypes')->with('message', __('Leave Type Updated'));
+        }
+        else{
+            Leave::insert('leave_type', $insert_array);
+            return redirect('leaveTypes')->with('message', __('Leave Type Added'));
+        }
+        
     }
 
     /**
@@ -410,7 +433,33 @@ class DashboardController extends Controller
          * @var Array
          */
         $data = [];
-        $data['leaveTypes'] = Leave::select('leave_type',['leave_type_name']);
+        $data['leaveTypes'] = Leave::select('leave_type',['leave_type_id','leave_type_name']);
         return view('admin.leaveTypes', $data);
+    }
+
+    /**
+     * @DateOfCreation         27 August 2018
+     * @ShortDescription       Get the ID from the ajax and pass it to the function to delete it
+     * @return                 Response
+     */
+    public function deleteLeaveType(Request $request)
+    {
+        try {
+            $id = Crypt::decrypt($request->input('id'));
+            if (is_int($id)) {
+                $user = Leave::delete('leave_type', ['leave_type_id'=>$id]);
+                echo $user;
+                die;
+                if ($user) {
+                    return Config::get('constants.OPERATION_CONFIRM');
+                } else {
+                    return Config::get('constants.OPERATION_FAIED');
+                }
+            } else {
+                return Config::get('constants.ID_NOT_CORRECT');
+            }
+        } catch (DecryptException $e) {
+            return Config::get('constants.ID_NOT_CORRECT');
+        }
     }
 }
