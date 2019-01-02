@@ -11,5 +11,10 @@
                 <span>{{ __('messages.users') }}</span>
             </a>
         </li>
+        <li>
+            <a class="" href="{{ url('/') }}/leaveTypes">
+                <span>Leave Types</span>
+            </a>
+        </li>
     </ul>
 </div>
