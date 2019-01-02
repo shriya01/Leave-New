@@ -372,7 +372,6 @@ class DashboardController extends Controller
      *
      */
     public function getLeaveType($id = null){
-         
         $data = [];
         if(!empty($id))
         {
@@ -410,13 +409,11 @@ class DashboardController extends Controller
  
         $leave_type_name =  request()->leave_type_name;
         $insert_array =  [ 'leave_type_name' => $leave_type_name ];
-        if(!empty($id))
-        {
+        if(!empty($id)){
             Leave::update('leave_type',$insert_array,['leave_type_id'=>$id]);
             return redirect('leaveTypes')->with('message', __('Leave Type Updated'));
         }
-        else
-        {
+        else{
             Leave::insert('leave_type', $insert_array);
             return redirect('leaveTypes')->with('message', __('Leave Type Added'));
         }
