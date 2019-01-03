@@ -393,7 +393,9 @@ class DashboardController extends Controller
      */
     public function postLeaveType(Request $request){
         $rules = ['leave_type_name' => 'required|unique:leave_type'];
-        $id =  Crypt::decrypt(request()->leave_type_id);
+        if(!empty(request()->leave_type_id))
+        {
+            $id =  Crypt::decrypt(request()->leave_type_id);
         if(!empty($id))
         {   
             $rules['leave_type_name'] = 'required|unique:leave_type,leave_type_name,'.$id.',leave_type_id';
@@ -407,7 +409,9 @@ class DashboardController extends Controller
             return redirect()->back()->withInput()->withErrors($validator->errors());
         }
  
-        $leave_type_name =  request()->leave_type_name;
+      
+        }
+          $leave_type_name =  request()->leave_type_name;
         $insert_array =  [ 'leave_type_name' => $leave_type_name ];
         if(!empty($id)){
             Leave::update('leave_type',$insert_array,['leave_type_id'=>$id]);

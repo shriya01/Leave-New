@@ -30,7 +30,7 @@
             @endif
             <form role="form" method="post" id="adminleaveform" action="{{route('leaveTypes')}}">
                 @csrf
-                 <input type="hidden" name="leave_type_id" value="{{ Crypt::encrypt($leave_type_id) }}">
+                 <input type="hidden" name="leave_type_id" @if(isset($leave_type_id)) value="{{ Crypt::encrypt($leave_type_id) }}" @endif>
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="leave_type_name" >Leave Type</label>
